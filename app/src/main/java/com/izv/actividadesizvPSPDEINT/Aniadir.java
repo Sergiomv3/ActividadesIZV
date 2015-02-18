@@ -67,19 +67,22 @@ public class Aniadir extends Activity {
 
 
 
-        String[] peticiones = new String[1]; // SACAMOS PROFESORES
+        String[] peticiones = new String[2]; // SACAMOS PROFESORES
         peticiones[0] = "profesor";
+        peticiones[1] = "grupo"; // SACAMOS GRUPOS
         GetRestFul get = new GetRestFul();
         get.execute(peticiones);
 
 
 
-        alGrupos.add("Grupo1"); // SACAMOS GRUPOS
-        alGrupos.add("Grupo2");
+
+
+
+        /*
         ArrayAdapter<String> aaGrupos = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, alGrupos);
         aaGrupos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spGrupo.setAdapter(aaGrupos);
+        spGrupo.setAdapter(aaGrupos);*/
 
         // COMPLEMENTARIA
         etHoraHasta = (TextView)findViewById(R.id.etHoraHasta);
@@ -108,6 +111,7 @@ public class Aniadir extends Activity {
         btFechaLlegada = (Button)findViewById(R.id.btFechaDe);
         btFechaSalida = (Button)findViewById(R.id.btFechaHasta);
         btHoraSalida = (Button)findViewById(R.id.btHoraSalida);
+        comple();
     }
 
 
@@ -207,7 +211,35 @@ public class Aniadir extends Activity {
         btHoraSalida.setVisibility(View.GONE);
         btHoraLlegada.setVisibility(View.GONE);
     }
-
+    public void comple(){
+        // COMPL
+        tvDe.setVisibility(View.VISIBLE);
+        tvHasta.setVisibility(View.VISIBLE);
+        etHoraDe.setVisibility(View.VISIBLE);
+        etHoraHasta.setVisibility(View.VISIBLE);
+        btHoraDe.setVisibility(View.VISIBLE);
+        etLugar.setVisibility(View.VISIBLE);
+        etFecha.setVisibility(View.VISIBLE);
+        btHoraHasta.setVisibility(View.VISIBLE);
+        btFecha.setVisibility(View.VISIBLE);
+        // EXTRA HIDDEN
+        tvLugarSalida.setVisibility(View.GONE);
+        tvLugarLlegada.setVisibility(View.GONE);
+        tvHoraSalida.setVisibility(View.GONE);
+        tvHoraLlegada.setVisibility(View.GONE);
+        tvFechaSalida.setVisibility(View.GONE);
+        tvFechaLlegada.setVisibility(View.GONE);
+        etHoraSalida.setVisibility(View.GONE);
+        etHoraLlegada.setVisibility(View.GONE);
+        etFechaSalida.setVisibility(View.GONE);
+        etFechaLlegada.setVisibility(View.GONE);
+        etLugarSalida.setVisibility(View.GONE);
+        etLugarLlegada.setVisibility(View.GONE);
+        btFechaLlegada.setVisibility(View.GONE);
+        btFechaSalida.setVisibility(View.GONE);
+        btHoraSalida.setVisibility(View.GONE);
+        btHoraLlegada.setVisibility(View.GONE);
+    }
     public void extraescolar(View v){
        // HIDDEN COMP
         tvDe.setVisibility(View.GONE);
@@ -391,6 +423,22 @@ public class Aniadir extends Activity {
                 aaProfesor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spProfesor.setAdapter(aaProfesor);
             }catch(Exception ex){}
+            JSONTokener token2 = new JSONTokener(s[1]);
+            try {
+                //JSONObject root = new JSONObject(tokener); no sirve
+                JSONArray array2 = new JSONArray(token2);
+                for(int i=0;  i<array2.length(); i++){
+                    JSONObject object = array2.getJSONObject(i);
+                    Grupo g = new Grupo(object);
+                    alGrupos.add(g.getGrupo());
+                }
+                ArrayAdapter<String> aaGrupo = new ArrayAdapter<String>(Aniadir.this,
+                        android.R.layout.simple_spinner_item, alGrupos);
+                aaGrupo.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spGrupo.setAdapter(aaGrupo);
+            }catch(Exception ex){}
+            System.out.println(s[1]);
         }
     }
+
 }

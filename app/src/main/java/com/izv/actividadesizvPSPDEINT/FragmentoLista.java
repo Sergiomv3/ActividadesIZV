@@ -61,6 +61,7 @@ public class FragmentoLista extends Fragment {
         lvActividades.setAdapter(ad);
         registerForContextMenu(lvActividades);
         ad.notifyDataSetChanged();
+        cargarActividades();
 
         lvActividades.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -75,7 +76,7 @@ public class FragmentoLista extends Fragment {
                 }
             }
         });
-        cargarActividades();
+
 
         return v;
     }
@@ -115,14 +116,18 @@ public class FragmentoLista extends Fragment {
             try {
                 //JSONObject root = new JSONObject(tokener);
                 JSONArray array = new JSONArray(token);
+
                 for(int i=0;  i<array.length(); i++){
+
                     JSONObject object = array.getJSONObject(i);
                     ActividadRest a = new ActividadRest(object);
                     alActividades.add(a);
-//                    System.out.println(alActividades.get(0));
+
 
                 }
+                System.out.println(alActividades.get(0).toString());
                 ad.notifyDataSetChanged();
+
             }catch(Exception ex){}
 //
         }
@@ -133,6 +138,7 @@ public class FragmentoLista extends Fragment {
         peticiones[0] = "actividad/Sergio";
         GetRestFul get = new GetRestFul();
         get.execute(peticiones);
+
 
     }
 
